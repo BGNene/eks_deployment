@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: Angular
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: Angular
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: Angular
+        tier: frontend
+    spec:
+      containers:
+        - name: app
+          image: public.ecr.aws/i8c9x3b1/ecare_demo
+          ports:
+            - containerPort: 3000
+         
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: Angular
+spec:
+  selector:
+    app: Angular
+    tier: frontend
+
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30000
+  type: LoadBalancer
+~
+~
+    
