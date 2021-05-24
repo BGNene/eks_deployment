@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: SFE_Angular
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: SFE_Angular
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: SFE_Angular
+        tier: frontend
+    spec:
+      containers:
+        - name: app
+          image: public.ecr.aws/i8c9x3b1/ecare_demo
+          ports:
+            - containerPort: 3000
+         
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: SFE_Angular
+spec:
+  selector:
+    app: SFE_Angular
+    tier: frontend
+
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30000
+  type: LoadBalancer
+~
+~
+"SFE_Angular.yaml" 41L, 674C      
